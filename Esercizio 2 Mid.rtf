@@ -1,0 +1,64 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww21920\viewh15580\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Esercizio 2\
+\
+In grafica 3D la pipeline di rendering si riferisce alla sequenza di passi usata per creare una rappresentazione raster 2D della scena 3D. In poche parole, una volta che un modello 3D e\'92 stato creato per un videogioco o animazione 3D, la pipeline rendering e\'92 il processo che trasforma quel modello 3D in quello che il computer vede.\
+\
+Gli stadi:\
+\
+\ul Specificazione vertici:\ulnone \
+E\'92 il processo dove l\'92applicazione imposta una lista di vertici da inviare alla pipeline. Questi vertici definiscono i confini delle primitive.\
+Ci sono oggetti come Vertex Array Objects e Vertex Buffer Objects che definiscono i dati che ogni vertice contiene e questi dati sono salvati nel buffer.\
+\
+\ul Rendering vertici:\ulnone \
+Una volta che i dati dei vertici sono correttamente specificati  viene fatto il rendering come se fosse una primitiva, attraverso commando di disegno.\
+\
+\ul Processing dei vertici:\ulnone \
+-Vertex shader: ricevono gli attributi dalla fase precedente e convertono ogni vertice in un vertice uscente basato su un programma arbitrario(user-defined). Ogni vertice in input deve essere mappato in un specifico vertice di output.\
+-Tassellazione: Le primitive possono essere tassellate usando shader a due stadi ed un tessellatore a funzione fissa tra i due. TCS(Tessellation Control Shader) e\'92 il primo stadio e determina la quantit\'e0 di tessellazione da applicare ad una primitiva ed assicura anche connettivit\'e0 tra primitive tessellate adiacenti. TES(Tessellation Evaluation Shader) applica l\'92interpolazione . La tessellazione e\'92 un processo opzionale.\
+\
+\ul Post-Processing di vertici:\ulnone \
+-Transform feedback: I dati presi dalle fasi precedenti vengono scritti in dei buffer. Permette all\'92utente di fare trasformazione di dati via vertici e via shader, dopodich\'e9 tenersi quei dati per usarli pi\'f9 tardi (anche nelle fasi successive).\
+-Clipping: determina quali parti del disegno appartengono al volume di visualizzazione.\
+\
+\ul Assemblaggio primitive:\ulnone \
+Prende insiemi di dati dei vertici(processati nelle fasi precedenti) e li compone in una sequenza di primitive(linee, punti o triangoli). Come output di questo processo abbiamo la sequenza di queste primitive.\
+-Face culling(per triangoli): Evita il rendering di triangoli che non sono visibili dall\'92inquadratura.\
+\
+\ul Rasterizzazione: \ulnone \
+Le primitive vengono rasterizzate, il risultato della rasterizzazzione di una primitiva e\'92 una sequenza di frammenti. Il frammento e\'92 usato per avere i dati finali per la creazione del pixel nel buffer di output. Pi\'f9 precisamente viene usato lo stato del frammento che contiene la posizione sullo schermo e i dati presi dalle fasi precedenti. \
+\
+\ul Fragment Processing:\ulnone \
+I dati dei frammenti vengono processati da un fragment shader. Questo fragment shader da in output una lista di colori, un valore di profondit\'e0 e un valore stencil.\
+\
+\ul Fase di test:\ulnone \
+I dati dei frammenti attraversano una serie di test.\
+-Pixel ownership test\
+-Scissor test\
+-Stencil test\
+-Depth test\
+Dopo questi abbiamo le sfumature dei colori.\
+\
+\ul Differenza tra retention e grafica immediata:\
+La grafica immediata\ulnone  disegna direttamente sul frame buffer, chiedendo al sistema grafico di fare il rastering delle figure. Al termine del processo del drawing il sistema grafico non sa pi\'f9 niente di quello che abbiamo disegnato. Si limita a tenere la bitmap del risultato. E quindi ad ogni modifica la bitmap viene aggiornata.\
+I vantaggi della grafica immediata sono:\
+-La memoria costante per il sistema grafico\
+-Il modello nell\'92applicazione e\'92 problem tailored\
+-Compatto\
+\
+Pero risparmiare memoria attualmente non e\'92 un problema(nella maggior parte dei casi comuni).\
+\
+\ul Grafica a Retention\ulnone \
+Si basa sul principio dell\'92ownership del dato. Abbiamo un processo che ha una sua memoria e l\'92output e\'92 una struttura dati, e quindi e\'92 il sistema grafico che si ricorda le primitive e le elabora in modo appropriato. Il sistema grafico si prende a carico un livello di programmazione che prima era a carico del programmatore.\
+\
+In conclusione: La grafica a retention puo\'92 essere pi\'f9 semplice da usare ma e\'92 spesso meno flessibile per via delle API che impongono i loro modelli. Inoltre la grafica a retention pu\'f2 avere una richiesta di memoria maggiore rispetto alla grafica immediata.\
+\
+\
+\
+\
+\
+}
